@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
+from prompts import system_prompt
+
 load_dotenv()
 
 api_key = os.environ.get("GOOGLE_API_KEY")
@@ -24,7 +26,9 @@ if is_verbose:
 messages = [types.Content(role="user", parts=[types.Part(text=user_prompt)])]
 
 response = client.models.generate_content(
-    model="gemini-2.0-flash-001", contents=messages
+    model="gemini-2.0-flash-001",
+    contents=messages,
+    config=types.GenerateContentConfig(system_instruction=system_prompt),
 )
 
 print(response.text)
