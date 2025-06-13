@@ -75,7 +75,8 @@ def call_function(function_call_part, verbose=False) -> types.Content:
             ],
         )
 
-    # Add working_directory to the args
+    # Add working_directory to the args here because
+    # we don't want it to be controlled by LLM.
     args = dict(function_call_part.args)
     args["working_directory"] = "./calculator"
 
