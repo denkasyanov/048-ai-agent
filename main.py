@@ -1,18 +1,13 @@
 import os
 import sys
-from typing import Dict, Any, Sequence, cast
+from typing import Dict, Any, Sequence
 
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-from prompts import system_prompt
-from tools import (
-    schema_get_files_info,
-    schema_get_file_content,
-    schema_write_file,
-    schema_run_python_file,
-)
+from config import get_config
+
 from call_function import call_function
 
 load_dotenv()
@@ -36,25 +31,12 @@ messages: Sequence[types.Content] = [
 ]
 
 
-available_functions = types.Tool(
-    function_declarations=[
-        schema_get_files_info,
-        schema_get_file_content,
-        schema_write_file,
-        schema_run_python_file,
-    ]
-)
-
-
-
 response = client.models.generate_content(
     model="gemini-2.0-flash-001",
     contents=messages,
-    config=types.GenerateContentConfig(
-        system_instruction=system_prompt,
-        tools=[available_functions],
-    ),
+    config=get_config(),
 )
+
 if response.function_calls:
     for function_call in response.function_calls:
         function_call_result = call_function(function_call, verbose=is_verbose)
