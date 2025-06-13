@@ -5,21 +5,21 @@
 
 ## Usage
 
-Set `GEMINI_API_KEY` environment variable.
+### Step 1: Set up your API key
 
-In your shell:
+Set the `GEMINI_API_KEY` environment variable.
 
+**Option A: Using shell export**
 ```shell
 export GEMINI_API_KEY=your-api-key
 ```
 
-Or in a `.env` file:
-
+**Option B: Using a `.env` file**
 ```shell
 GEMINI_API_KEY=your-api-key
 ```
 
-Run the script.
+### Step 2: Run the script
 
 ```shell
 python main.py "What is the capital of France?"
